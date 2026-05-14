@@ -1,2 +1,40 @@
-<h1>Hello, I’m Ritika</h1>
-<p>Welcome to my portfolio!</p>
+<body>
+    <h1>Hello, I’m Ritika</h1>
+    <p>Welcome to my portfolio!</p>
+
+    <!-- Your new feature -->
+    <h2>Find GitHub Handle</h2>
+    <input id="nameInput" placeholder="Enter a name">
+    <button onclick="lookupHandle()">Find Handle</button>
+    <p id="result"></p>
+
+<script>
+async function lookupHandle() {
+    const name = document.getElementById("nameInput").value.trim();
+    const result = document.getElementById("result");
+
+    if (!name) {
+        result.textContent = "Please enter a name.";
+        return;
+    }
+
+    const url = `https://api.github.com/search/users?q=${name}+in:login`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.items.length === 0) {
+            result.textContent = "No GitHub user found.";
+        } else {
+            const user = data.items[0];
+            result.innerHTML = `GitHub handle: <a href="${user.html_url}" target="_blank">@${user.login}</a>`;
+        }
+    } catch (error) {
+        result.textContent = "Error fetching data.";
+    }
+}
+</script>
+
+</body>
+
