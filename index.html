@@ -1,15 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ritika's Portfolio</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 40px;
+        }
+
+        .spinner {
+            border: 10px solid #aaa;        /* darker outer ring */
+            border-top: 10px solid #3498db; /* bright blue top */
+            border-radius: 50%;
+            width: 80px;                    /* bigger */
+            height: 80px;                   /* bigger */
+            animation: spin 1.2s linear infinite;
+            margin: 30px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
 <body>
     <h1>Hello, I’m Ritika</h1>
     <p>Welcome to my portfolio!</p>
 
-    <!-- Your new feature -->
     <h2>Find GitHub Handle</h2>
+
+    <!-- ⭐ Spinner ALWAYS visible -->
+    <div id="spinner" class="spinner"></div>
+
     <input id="nameInput" placeholder="Enter a name">
-    <button onclick="lookupHandle()">Find Handle</button>
+    <button onclick="generateHandle()">Get Placeholder Handle</button>
+
     <p id="result"></p>
 
 <script>
-async function lookupHandle() {
+function generateHandle() {
     const name = document.getElementById("nameInput").value.trim();
     const result = document.getElementById("result");
 
@@ -18,23 +69,23 @@ async function lookupHandle() {
         return;
     }
 
-    const url = `https://api.github.com/search/users?q=${name}+in:login`;
+    const placeholders = [
+        `${name}123`,
+        `${name}_dev`,
+        `${name}_codes`,
+        `${name}456`,
+        `real${name}`,
+        `${name}_official`,
+        `${name}_github`,
+        `${name}_xyz`,
+        `${name}001`,
+        `${name}_project`
+    ];
 
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
+    const randomHandle = placeholders[Math.floor(Math.random() * placeholders.length)];
 
-        if (data.items.length === 0) {
-            result.textContent = "No GitHub user found.";
-        } else {
-            const user = data.items[0];
-            result.innerHTML = `GitHub handle: <a href="${user.html_url}" target="_blank">@${user.login}</a>`;
-        }
-    } catch (error) {
-        result.textContent = "Error fetching data.";
-    }
+    result.innerHTML = `Placeholder GitHub handle: <strong>@${randomHandle}</strong>`;
 }
 </script>
-
 </body>
-
+</html>
